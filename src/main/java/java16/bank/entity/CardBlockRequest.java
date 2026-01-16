@@ -2,16 +2,15 @@ package java16.bank.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import java16.bank.enums.RequestStatus;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "card_block_requests")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CardBlockRequest {

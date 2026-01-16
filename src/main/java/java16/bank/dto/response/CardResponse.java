@@ -1,4 +1,4 @@
-package java16.bank.dto;
+package java16.bank.dto.response;
 
 import java16.bank.enums.CardStatus;
 import lombok.AllArgsConstructor;

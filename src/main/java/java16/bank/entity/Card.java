@@ -3,9 +3,7 @@ package java16.bank.entity;
 
 import jakarta.persistence.*;
 import java16.bank.enums.CardStatus;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,7 +12,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "cards")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Card {

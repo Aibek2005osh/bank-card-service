@@ -1,6 +1,6 @@
 package java16.bank.mapper;
 
-import java16.bank.dto.CardResponse;
+import java16.bank.dto.response.CardResponse;
 import java16.bank.entity.Card;
 import org.springframework.stereotype.Component;
 

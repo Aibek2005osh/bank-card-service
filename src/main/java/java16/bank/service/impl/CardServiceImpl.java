@@ -3,7 +3,7 @@ package java16.bank.service.impl;
 
 import java16.bank.dto.BlockCardRequest;
 import java16.bank.dto.CardRequest;
-import java16.bank.dto.CardResponse;
+import java16.bank.dto.response.CardResponse;
 import java16.bank.entity.Card;
 import java16.bank.entity.CardBlockRequest;
 import java16.bank.entity.User;

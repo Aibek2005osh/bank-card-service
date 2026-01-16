@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="05-insert-admin" author="aibek">
+        <preConditions onFail="MARK_RAN" onError="HALT">
+            <not>
+                <sqlCheck expectedResult="0">
+                    SELECT COUNT(*) FROM users WHERE username = 'admin'
+                </sqlCheck>
+            </not>
+        </preConditions>
+
+        <insert tableName="users">
+            <column name="username" value="admin"/>
+            <column name="password" value="$2a$10$REPLACE_WITH_YOUR_BCRYPT_HASH"/>
+            <column name="full_name" value="Default Admin"/>
+            <column name="email" value="admin@mail.com"/>
+            <column name="role" value="ADMIN"/>
+            <column name="enabled" valueBoolean="true"/>
+            <column name="created_at" valueDate="NOW()"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

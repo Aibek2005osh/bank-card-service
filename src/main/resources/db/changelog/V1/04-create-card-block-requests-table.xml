@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="04-create-card-block-requests" author="aibek">
+        <preConditions onFail="MARK_RAN" onError="HALT">
+            <not>
+                <tableExists tableName="card_block_requests"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="card_block_requests">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="card_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="reason" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- Entity: processedAt -->
+            <column name="processed_at" type="TIMESTAMP"/>
+
+            <!-- Entity: processedBy (User) -->
+            <column name="processed_by" type="BIGINT"/>
+
+            <!-- Entity: adminComment -->
+            <column name="admin_comment" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="card_block_requests"
+                baseColumnNames="card_id"
+                referencedTableName="cards"
+                referencedColumnNames="id"
+                constraintName="fk_block_requests_card"/>
+
+        <addForeignKeyConstraint
+                baseTableName="card_block_requests"
+                baseColumnNames="user_id"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                constraintName="fk_block_requests_user"/>
+
+        <addForeignKeyConstraint
+                baseTableName="card_block_requests"
+                baseColumnNames="processed_by"
+                referencedTableName="users"
+                referencedColumnNames="id"
+                constraintName="fk_block_requests_processed_by"/>
+
+        <createIndex indexName="idx_block_requests_card_id" tableName="card_block_requests">
+            <column name="card_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_block_requests_user_id" tableName="card_block_requests">
+            <column name="user_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_block_requests_status" tableName="card_block_requests">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

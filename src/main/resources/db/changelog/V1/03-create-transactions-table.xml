@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="03-create-transactions" author="aibek">
+        <preConditions onFail="MARK_RAN" onError="HALT">
+            <not>
+                <tableExists tableName="transactions"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="transactions">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="source_card_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="destination_card_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="amount" type="NUMERIC(15,2)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="status" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="VARCHAR(255)"/>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="completed_at" type="TIMESTAMP"/>
+            <column name="error_message" type="VARCHAR(255)"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="transactions"
+                baseColumnNames="source_card_id"
+                referencedTableName="cards"
+                referencedColumnNames="id"
+                constraintName="fk_transactions_source_card"/>
+
+        <addForeignKeyConstraint
+                baseTableName="transactions"
+                baseColumnNames="destination_card_id"
+                referencedTableName="cards"
+                referencedColumnNames="id"
+                constraintName="fk_transactions_destination_card"/>
+
+        <createIndex indexName="idx_tx_source_card" tableName="transactions">
+            <column name="source_card_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_tx_destination_card" tableName="transactions">
+            <column name="destination_card_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_tx_status" tableName="transactions">
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -2,7 +2,7 @@ package java16.bank.service;
 
 import java16.bank.dto.BlockCardRequest;
 import java16.bank.dto.CardRequest;
-import java16.bank.dto.CardResponse;
+import java16.bank.dto.response.CardResponse;
 import java16.bank.entity.User;
 import java16.bank.enums.CardStatus;
 import org.springframework.data.domain.Page;
